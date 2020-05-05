@@ -1,0 +1,10 @@
+/.vscode/
+/bin/
+/obj/
+STL.cbp
+STL.layout
+STL.depend
+test.exe
+CMakeLists.txt
+gmon.out
+main.cpp
