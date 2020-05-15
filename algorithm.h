@@ -5,7 +5,7 @@
 #include "iterator.h"
 namespace mystl
 {
-#if 0
+#if 1
     template <class InputIterator, class OutputIterator>
     OutputIterator copy(InputIterator first, InputIterator last, OutputIterator result)
     {

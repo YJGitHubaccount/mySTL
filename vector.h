@@ -3,6 +3,7 @@
 #include "algorithm.h"
 #include "allocator.h"
 #include "construct.h"
+#include "iterator.h"
 #include "uninitialized.h"
 #include <algorithm>
 
@@ -14,6 +15,7 @@ namespace mystl
     public:
         typedef T value_type;
         typedef value_type *iterator;
+        typedef reverse_iterator<iterator> reverse_iterator;
         typedef T *pointer;
         typedef T &reference;
         typedef size_t size_type;

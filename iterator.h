@@ -3,7 +3,7 @@
 
 //该文件主要实现了iterator_traits
 #include <stddef.h> //ptrdiff_t,size_t
-
+#
 namespace mystl
 {
     //iterator_catetory_tag
@@ -32,6 +32,116 @@ namespace mystl
         typedef Pointer pointer;
         typedef Reference reference;
     };
+
+    //前置声明
+    template <class Iterator>
+    struct iterator_traits;
+
+    template <class Iterator>
+    class reverse_iterator
+    {
+    protected:
+        Iterator current; //正向iterator
+        //逆向iterator取值=正向iterator退一位取值
+    public:
+        typedef typename iterator_traits<Iterator>::iterator_category iterator_category;
+        typedef typename iterator_traits<Iterator>::value_type value_type;
+        typedef typename iterator_traits<Iterator>::difference_type difference_type;
+        typedef typename iterator_traits<Iterator>::pointer pointer;
+        typedef typename iterator_traits<Iterator>::reference reference;
+        typedef Iterator iterator_type;
+        typedef reverse_iterator<Iterator> self;
+
+    public:
+        explicit reverse_iterator(iterator_type x) : current(x) {}
+        reverse_iterator(const self &x) : current(x.current) {}
+        //取出对应的正向iterator
+        iterator_type base() const
+        {
+            return current;
+        }
+        reference operator*() const
+        {
+            Iterator temp = current;
+            return *(--temp);
+        }
+        pointer operator->() const
+        {
+            return &(operator*());
+        }
+        self &operator++()
+        {
+            --current;
+            return *this;
+        }
+        self &operator--()
+        {
+            ++current;
+            return *this;
+        }
+        self operator+(difference_type n) const
+        {
+            return self(current - n);
+        }
+        self operator-(difference_type n) const
+        {
+            return self(current + n);
+        }
+        bool operator==(iterator_type iter)
+        {
+            return (current == iter);
+        }
+        bool operator!=(iterator_type iter)
+        {
+            return !(current == iter);
+        }
+        bool operator==(self iter)
+        {
+            return (current == iter);
+        }
+        bool operator!=(self iter)
+        {
+            return !(current == iter);
+        }
+    };
+
+    template <class Container>
+    class insert_iterator
+    {
+    protected:
+        Container *container;
+        typename Container::iterator iter;
+
+    public:
+        typedef output_iterator_tag iterator_category; //注意类型
+        typedef typename iterator_traits<typename Container::iterator>::value_type value_type;
+        typedef typename iterator_traits<typename Container::iterator>::difference_type difference_type;
+
+        insert_iterator(Container &x, typename Container::iterator i) : container(&x), iter(i) {}
+
+        insert_iterator<Container> &operator=(typename Container::value_type &value)
+        {
+            iter = container->insert(iter, value);
+            ++iter;
+            return *this;
+        }
+        //忽略++操作
+        insert_iterator<Container> &operator++()
+        {
+            return *this;
+        }
+        //忽略*操作
+        insert_iterator<Container> &operator*()
+        {
+            return *this;
+        }
+    };
+
+    template <class Container, class Iterator>
+    inline insert_iterator<Container> inserter(Container &x, Iterator i)
+    {
+        return insert_iterator<Container>(x, typename Container::iterator(i));
+    }
 
     template <class Iterator>
     struct iterator_traits

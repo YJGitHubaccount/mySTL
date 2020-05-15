@@ -89,6 +89,7 @@ namespace mystl
         typedef list_node *link_type;
         typedef size_t size_type;
         typedef __list_iterator<T> iterator;
+        typedef reverse_iterator<iterator> reverse_iterator;
         typedef T value_type;
         typedef T *pointer;
         typedef T &reference;
@@ -150,6 +151,10 @@ namespace mystl
             (position.node->prev)->next = temp;
             position.node->prev = temp;
             return temp;
+        }
+        iterator insert(iterator position, T &&x)
+        {
+            return insert(position, x);
         }
         void push_back(const reference x)
         {
