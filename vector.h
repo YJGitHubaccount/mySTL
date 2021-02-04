@@ -6,6 +6,8 @@
 #include "iterator.h"
 #include "uninitialized.h"
 #include <algorithm>
+#include <initializer_list>
+#include <iostream>
 
 namespace mystl
 {
@@ -45,6 +47,13 @@ namespace mystl
         explicit vector(size_type n)
         {
             fill_initialize(n, T());
+        }
+        vector(std::initializer_list<value_type> l) : start(0), finish(0), end_of_storage(0)
+        {
+            for (value_type value : l)
+            {
+                this->push_back(value);
+            }
         }
         ~vector()
         {
