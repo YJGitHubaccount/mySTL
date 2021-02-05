@@ -3,6 +3,9 @@
  * 注：这些算法不允许指定比较标准，使用需重载>,<操作符
 */
 
+#ifndef __HEAP_ALGO_H_
+#define __HEAP_ALGO_H_
+
 #include "iterator.h"
 
 namespace mystl
@@ -133,3 +136,5 @@ namespace mystl
     }
 
 } // namespace mystl
+
+#endif // __HEAP_ALGO_H_

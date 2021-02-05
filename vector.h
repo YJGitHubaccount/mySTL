@@ -20,6 +20,7 @@ namespace mystl
         typedef reverse_iterator<iterator> reverse_iterator;
         typedef T *pointer;
         typedef T &reference;
+        typedef const reference const_reference;
         typedef size_t size_type;
 
     protected:
@@ -53,6 +54,14 @@ namespace mystl
             for (value_type value : l)
             {
                 this->push_back(value);
+            }
+        }
+        template <class InputIterator>
+        vector(InputIterator first, InputIterator last) : start(0), finish(0), end_of_storage(0)
+        {
+            for (auto iter = first; iter != last; iter++)
+            {
+                this->push_back(*iter);
             }
         }
         ~vector()
@@ -90,11 +99,11 @@ namespace mystl
         {
             return size_type(end_of_storage - begin());
         }
-        value_type front() const
+        const_reference front() const
         {
             return *begin();
         }
-        value_type back() const
+        const_reference back() const
         {
             return *(end() - 1);
         }

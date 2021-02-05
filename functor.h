@@ -29,6 +29,15 @@ namespace mystl
         }
     };
 
+    template <class T>
+    struct greater : public binary_function<T, T, bool>
+    {
+        bool operator()(const T &x, const T &y) const
+        {
+            return x > y;
+        }
+    };
+
     template <class Operation>
     class binder2nd : public unary_function<typename Operation::first_argument_type, typename Operation::result_type>
     {
