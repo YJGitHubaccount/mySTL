@@ -26,7 +26,7 @@ MyTinySTL
 - [ ] adapters
   - [ ] stack
   - [ ] queue
-  - [ ] priority_queue
+  - [x] priority_queue
   - [x] reverse_iterator
 
 
